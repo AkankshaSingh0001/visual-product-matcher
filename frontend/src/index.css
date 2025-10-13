@@ -1,0 +1,21 @@
+/* Import a professional font from Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&display=swap');
+
+:root {
+  --background: #121212;
+  --surface: #1e1e1e;
+  --primary: #9acd32;
+  --secondary: #9acd32;
+  --on-surface: #e1e1e1;
+  --on-surface-variant: #888;
+  --border: #333;
+}
+
+body {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: var(--background);
+  color: var(--on-surface);
+}
