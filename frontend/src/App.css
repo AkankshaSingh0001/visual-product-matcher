@@ -277,8 +277,9 @@ aside {
 
 .card-face--front img {
   width: 100%;
-  height: 220px;
+  height: 250px;
   place-items: center;
+  background-position: center;
   background-position: center;
   object-fit: cover;
   background-color: #333;
@@ -301,6 +302,7 @@ aside {
   font-size: 0.85rem;
   color: var(--on-surface-variant);
   margin: 0;
+  
 }
 
 .similarity {
