@@ -8,7 +8,6 @@ import numpy as np
 import os
 import certifi
 import hashlib
-import base64
 
 # --- SETUP ---
 os.environ["SSL_CERT_FILE"] = certifi.where()
@@ -19,7 +18,7 @@ if not os.path.exists(CACHE_DIR):
     os.makedirs(CACHE_DIR)
 
 # --- NEW: HUGGING FACE API CONFIG ---
-# The AI model is now an external API call
+# The AI model is now an external API call, making our server lightweight
 MODEL_API_URL = "https://api-inference.huggingface.co/models/sentence-transformers/clip-ViT-B-32"
 # The Hugging Face token will be read from an environment variable for security
 HF_TOKEN = os.environ.get("HF_TOKEN")
@@ -83,7 +82,6 @@ def image_proxy():
 
 @app.route('/api/book-details/<book_id>', methods=['GET'])
 def get_book_details(book_id):
-    # This endpoint remains the same
     try:
         details_url = f"https://openlibrary.org/works/{book_id}.json"
         response = requests.get(details_url, timeout=10)
@@ -113,7 +111,6 @@ def search():
                 headers = {'User-Agent': 'Mozilla/5.0'}
                 response = requests.get(image_url, headers=headers)
                 response.raise_for_status()
-                # Check if the content is an image before reading
                 content_type = response.headers.get('content-type')
                 if not content_type or 'image' not in content_type:
                     return jsonify({'error': 'URL is not a direct link to an image.'}), 400
@@ -126,7 +123,6 @@ def search():
     try:
         # Call the external API for the vector
         query_vector = get_vector_from_hf(image_bytes)
-
         results = [{**book, 'similarity': cosine_similarity(query_vector, book['image_vector'])} for book in books_data]
         results.sort(key=lambda x: x['similarity'], reverse=True)
         top_10_results = results[:10]
@@ -137,7 +133,6 @@ def search():
 
 @app.route('/api/search-by-id', methods=['POST'])
 def search_by_id():
-    # This logic remains the same as it uses pre-calculated vectors
     json_data = request.get_json()
     if not json_data or 'id' not in json_data:
         return jsonify({'error': 'Book ID missing.'}), 400
@@ -159,8 +154,7 @@ def search_by_id():
         return jsonify({'error': 'Error during similarity search.'}), 500
 
 if __name__ == '__main__':
-    # Add a check for the token when running locally
     if not HF_TOKEN:
-        raise ValueError("HF_TOKEN environment variable not set. Please create a .env file with HF_TOKEN='your_hf_token'")
+        print("WARNING: HF_TOKEN environment variable not set. This is required for deployment.")
     app.run(port=5001)
 
