@@ -1,129 +1,160 @@
-Visual Book Matcher
-A full-stack web application that finds visually similar book covers using AI-powered vector embeddings.
-Live Demo: [YOUR DEPLOYED URL HERE] (We will add this link after we deploy the application)
+# 📚 Visual Book Matcher
 
-(Suggestion: Take a screenshot of your finished app, upload it to a site like Imgur, and paste the direct image link here.)
+**Visual Book Matcher** is a full-stack web application that finds visually similar book covers using AI.  
+It combines a **React frontend** and a **Python backend** powered by the **Hugging Face Inference API**.
 
-About The Project
-This project is a web application designed to solve a common real-world problem: "I'm looking for a book that looks like this." It allows users to upload an image of a book cover (or provide a URL) and instantly receive a ranked list of the most visually similar books from a curated collection.
+🌐 **Live Demo: https://visual-product-matcher-5nqeia43c.vercel.app/**  
+> Deployment was unsuccessful on free-tier platforms due to resource limitations of the local AI model.  
+> The final architecture uses a lightweight API-based backend designed for successful deployment.  
+> *(See “Problem-Solving Approach” for details.)*
 
-The application is built with a modern, decoupled architecture, featuring a React frontend for a dynamic user experience and a powerful Python backend to handle the complex AI and image processing tasks.
+---
 
-Features
-This application is packed with features designed to provide a rich, professional, and user-friendly experience:
+## 📸 Preview
 
-Dual-Mode Image Search:
+![Visual Book Matcher Screenshot](./frontend/src/assets/1.png)
 
-Search by uploading a local image file.
+![Visual Book Matcher Screenshot](./frontend/src/assets/1.1.png)
 
-Search by pasting a direct URL to an image.
+![Visual Book Matcher Screenshot](./frontend/src/assets/2.png)
 
-AI-Powered Similarity Matching:
+![Visual Book Matcher Screenshot](./frontend/src/assets/3.png)
 
-Utilizes the CLIP-ViT-B-32 model to convert images into vector embeddings.
+![Visual Book Matcher Screenshot](./frontend/src/assets/4.png)
 
-Calculates similarity using the Cosine Similarity algorithm to rank results by visual likeness.
+![Visual Book Matcher Screenshot](./frontend/src/assets/5.png)
 
-"Find Similar" Reverse Search: A powerful discovery tool that allows users to click an icon on any book card to perform a new search using that book's cover as the query.
+![Visual Book Matcher Screenshot](./frontend/src/assets/5.1.png)
 
-Book Details Card-Flip: An elegant UI feature where clicking a book card flips it over to reveal a detailed description and publication information, fetched on demand.
+![Visual Book Matcher Screenshot](./frontend/src/assets/6.png)
+---
 
-Advanced Filtering:
+## 🧠 About The Project
 
-Filter by Similarity Score: A slider allows users to dynamically filter results based on the minimum match percentage.
+Have you ever seen a book cover and thought, “What other books look like this?”  
+**Visual Book Matcher** solves that problem by allowing users to upload an image or provide a URL of a book cover — and instantly receive visually similar books ranked by AI.
 
-Filter by Category: After a search, the app generates a list of category buttons, allowing for instant filtering of the results.
+This project demonstrates a **production-ready full-stack AI web app** that balances intelligence, speed, and scalability, while staying deployable on free-tier cloud environments.
 
-High-Performance Backend:
+The architecture is **decoupled**:
+- A modern **React + Vite frontend** for a fast, interactive user experience.  
+- A **Flask-based backend** that handles image fetching and delegates AI computation to Hugging Face.
 
-Image Proxy with Caching: A robust Python backend service that fetches and serves external images, bypassing hotlink protection. It includes a caching layer that saves images locally, making subsequent page loads almost instantaneous.
+---
 
-Pagination: The main book collection is loaded in batches, ensuring a fast initial page load and a smooth "Load More" experience.
+## ✨ Features
 
-Polished & Responsive UI/UX:
+### 🔍 Dual-Mode Image Search
+- Search by **uploading a local image**  
+- Or by **pasting an image URL**
 
-Clean, modern, and professional dark-mode design with a professional font (Inter).
+### 🤖 AI-Powered Similarity Matching
+- Uses **CLIP-ViT-B-32** via the Hugging Face Inference API  
+- Embeds book covers into vector space and ranks them using **cosine similarity**
 
-Component-Based Architecture: Built with a clean React structure for maintainability and scalability.
+### 🔁 “Find Similar” Reverse Search
+- Click an icon on any book to find visually similar ones from the collection
 
-Skeleton Loaders: Shimmering placeholders are shown while data is being fetched, providing a superior user experience.
+### 🧩 Advanced Filtering
+- **Similarity Slider** – filter by minimum match percentage  
+- **Category Filter** – dynamically generated buttons to filter results by category
 
-Helpful "Empty States": Clear messages are shown when a search or filter combination yields no results.
+### 🪄 Polished, Responsive UI
+- **Dark mode**, modern typography (Inter), and smooth animations  
+- **Skeleton loaders** while fetching data  
+- **Helpful empty states** for better UX  
+- Fully responsive design that works beautifully on desktop, tablet, and mobile
 
-Fully responsive design that looks great on desktop, tablet, and mobile devices.
+### ⚡ High-Performance Backend
+- **Image proxy and cache** for bypassing “hotlink protection” and speeding up image load times  
+- **Pagination** for large collections and better performance
 
-Tech Stack
-This project uses a modern, decoupled stack, choosing the best tool for each job:
+---
 
-Frontend:
+## 🧠 Problem-Solving Approach
 
-React: For building a dynamic, component-based user interface.
+A major challenge was deploying the AI model within **free-tier hosting constraints**.
 
-Vite: As the development server and build tool.
+Initially, the backend ran **PyTorch + Sentence Transformers** locally to process book cover images.  
+However, this caused repeated build and memory issues:
 
-CSS: For styling with a professional dark-mode theme.
+- ⏱️ **Build Timeouts:** Model setup and Torch installation took over 10 minutes  
+- 💾 **Memory Limits:** Most free-tier servers offer <1 GB RAM  
+- 📦 **Large Dependencies:** Model + libraries exceeded 1.5 GB container size  
 
-Backend:
+### ✅ The Architectural Pivot
 
-Python: The ideal language for AI and data processing.
+The final solution was to **offload AI inference to the Hugging Face Inference API**.  
+This transformed the backend into a **lightweight API gateway** that:
+- Deploys easily on free-tier services (like Google Cloud Run)
+- Stays under size and memory limits  
+- Maintains full AI-powered functionality  
+- Responds faster and scales more efficiently  
 
-Flask: A lightweight web framework for building the API.
+### Result:
+A backend that is **lightweight**, **deployable**, and **AI-powered** — without the heavy cost of local inference.
 
-Sentence-Transformers: A powerful library for running the CLIP model locally.
+---
 
-Pillow (PIL): For robust image processing.
+## 🛠️ Tech Stack
 
-Problem-Solving Approach
-A major part of this project involved overcoming the challenges of working with real-world, often unreliable, data and APIs.
+| Layer | Technology |
+|-------|-------------|
+| **Frontend** | React, Vite, Tailwind CSS |
+| **Backend** | Python (Flask, Gunicorn) |
+| **AI Model** | Hugging Face Inference API (CLIP-ViT-B-32) |
+| **Hosting** | Google Cloud Run (Backend), Vercel / Netlify (Frontend) |
 
-The initial approach of using free-tier external AI APIs (like Replicate and Hugging Face) and data sources (Google Books API) proved to be a dead end due to retired model versions, restrictive rate limits, network instability, and poor data quality.
+---
 
-The definitive solution was to build a more robust, self-contained system:
+## 💻 How to Run Locally
 
-Data Source: We switched to the Open Library API, which provided cleaner data and was more friendly to automated scripts. A two-step data generation script was written in Python to first find books with valid covers and then make a second, detailed request for each book to get rich category information.
+You’ll need **Node.js**, **Python**, and a **Hugging Face Access Token**.
 
-AI Processing: To eliminate external dependencies and ensure reliability, the Sentence-Transformers library was used to run the AI model locally on the backend server.
+---
 
-Image Loading: To bypass "hotlink protection" from external image servers, a caching image proxy was built into the Python backend. This ensures all images are displayed correctly and provides a massive performance boost on subsequent loads.
+### 🧩 1. Clone the Repository
 
-This iterative, problem-solving approach resulted in a final application that is not only functional but also fast, reliable, and resilient.
+```bash
+git clone https://github.com/YOUR_USERNAME/visual-product-matcher.git
+cd visual-product-matcher 
+```
+### ⚙️ 2. Set Up the Backend
 
-How to Run Locally
-To run this project on your own machine, you will need to have Node.js and Python installed.
-
-1. Clone the repository:
-
-git clone [https://github.com/AkankshaSingh0001/visual-product-matcher.git](https://github.com/AkankshaSingh0001/visual-product-matcher.git)
-cd visual-product-matcher
-
-2. Set up and run the Python Backend:
-
+``` bash
 # Navigate to the backend folder
-
 cd python-backend
 
+# Create a .env file and add your Hugging Face token
+# (Replace 'your_hf_api_token_here' with your actual token)
+echo "HF_TOKEN='your_hf_api_token_here'" > .env
+
 # Install dependencies
+pip install -r requirements.txt
 
-# (You will need to create a requirements.txt file for this to work)
-
-pip install Flask Flask-Cors sentence-transformers Pillow requests numpy certifi
-
-# Run the server
-
+# Run the backend
 python server.py
 
-3. Set up and run the React Frontend:
+```
 
-# Open a new, second terminal
+Once running, you’ll see:
 
-# Navigate to the frontend folder
+✅ Backend running at http://127.0.0.1:5001
 
+### 🌐 3. Set Up the Frontend
+
+```bash
+# Open a new terminal
 cd frontend
 
 # Install dependencies
-
 npm install
 
-# Run the development server
+# Create a .env file with the backend URL
+echo "VITE_API_BASE_URL=http://127.0.0.1:5001" > .env
 
+# Run the development server
 npm run dev
+```
+
+Visit the frontend at 👉 http://localhost:5173
