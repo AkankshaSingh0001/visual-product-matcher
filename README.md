@@ -3,7 +3,7 @@
 **Visual Book Matcher** is a full-stack web application that finds visually similar book covers using AI.  
 It combines a **React frontend** and a **Python backend** powered by the **Hugging Face Inference API**.
 
-🌐 **Live Demo: https://visual-product-matcher-5nqeia43c.vercel.app/**  
+🌐 **Live Demo: [https://visual-product-matcher-5nqeia43c.vercel.app/](https://visual-product-matcher-nine-wheat.vercel.app/)**  
 > Deployment was unsuccessful on free-tier platforms due to resource limitations of the local AI model.  
 > The final architecture uses a lightweight API-based backend designed for successful deployment.  
 > *(See “Problem-Solving Approach” for details.)*
