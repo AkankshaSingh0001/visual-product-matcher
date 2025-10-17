@@ -1,3 +1,6 @@
+                                                                Akanksha Singh
+                                                          Registration no- 24MCA0245
+
 # 📚 Visual Book Matcher
 
 **Visual Book Matcher** is a full-stack web application that finds visually similar book covers using AI.  
